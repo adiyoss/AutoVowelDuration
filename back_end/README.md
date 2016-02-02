@@ -1,7 +1,5 @@
-README
-======
-
 Vowel Duration Measurement Back End 1.0.0
+=======
 
 Copyright (C) Adiyoss
 
