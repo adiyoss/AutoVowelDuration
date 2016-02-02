@@ -1,0 +1,8 @@
+==============================================================
+Total files predicted: 268
+Total files that have more then 30 ms difference at the onset: 12
+Total files that have more then 50 ms difference at the offset: 47
+Cumulative onset loss: 1.2611940298507462
+Cumulative offset loss: 5.973880597014926
+Cumulative task loss: 6.67910447761194
+==============================================================
