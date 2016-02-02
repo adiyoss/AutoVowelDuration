@@ -4,7 +4,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 
@@ -17,3 +16,5 @@ hs_err_pid*
 .idea/
 back_end/new_look.iml
 back_end/data/
+back_end/out/
+
