@@ -114,27 +114,11 @@ def display_features(filename, frame_begin_and_end_real, frame_begin_and_end_pre
             plt.plot([predict[1], predict[1]], [min_m, max_m], linestyle=':', color='#335C09', lw=2)
         plt.xlim(xmin=0, xmax=len(m))
 
-        # plot the summary
-        onset_diff = (float(labels[0]) - float(predict[0])) * 5
-        offset_diff = (float(labels[1]) - float(predict[1])) * 5
-        total_diff = onset_diff + offset_diff
-        plt.figtext(0.01, 0.885, 'Summary:', style='italic', fontweight='bold', size='large')
-        plt.figtext(0.01, 0.85, 'Vowel onset: ' + str(float(labels[0]) * 5), style='italic')
-        plt.figtext(0.01, 0.83, 'Vowel offset: ' + str(float(labels[1]) * 5), style='italic')
-        plt.figtext(0.01, 0.81, 'Predicted onset: ' + str(float(predict[0]) * 5), style='italic')
-        plt.figtext(0.01, 0.79, 'Predicted offset: ' + str(float(predict[1]) * 5), style='italic')
-        plt.figtext(0.01, 0.72, 'Onset difference:', style='italic', fontweight='bold', size='large')
-        plt.figtext(0.01, 0.7, str(onset_diff) + ' milli seconds', style='italic')
-        plt.figtext(0.01, 0.65, 'Offset difference:', style='italic', fontweight='bold', size='large')
-        plt.figtext(0.01, 0.63, str(offset_diff) + ' milli seconds', style='italic')
-        plt.figtext(0.01, 0.58, 'Total difference:', style='italic', fontweight='bold', size='large')
-        plt.figtext(0.01, 0.56, str(total_diff) + ' milli seconds', style='italic')
-
         # plot the legend
         plt.figtext(0.13, 0.05, 'Q: quit', style='italic')
         plt.figtext(0.2, 0.05, 'P: Enable/disable prediction marks', style='italic')
         plt.figtext(0.38, 0.05, 'L: Enable/disable real label marks', style='italic')
-        plt.figtext(0.56, 0.05, 'F: Show/Hide the feature functions', style='italic')
+        plt.figtext(0.56, 0.05, 'F/R: Show/Hide the feature functions', style='italic')        
         plt.figtext(0.13, 0.02, 'Left arrow: Next figure', style='italic')
         plt.figtext(0.38, 0.02, 'Right arrow: Previous figure', style='italic')
         l2 = plt.legend([labels_plot, predict_plot], ["Real Label", "Predict Label"])
