@@ -14,7 +14,7 @@ hs_err_pid*
 # local fils
 .DS_Store
 .idea/
-back_end/new_look.iml
+back_end/back_end.iml
 back_end/data/
 back_end/out/
 
