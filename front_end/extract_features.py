@@ -1,5 +1,5 @@
 # coding=utf-8
-__author__ = 'yossiadi'
+# !/usr/bin/env python
 
 import sys
 import os
@@ -7,6 +7,8 @@ import shutil
 import argparse
 from subprocess import call
 import numpy as np
+
+__author__ = 'yossiadi'
 
 
 # run system commands
@@ -16,8 +18,8 @@ def easy_call(command):
     except Exception as exception:
         print "Error: could not execute the following"
         print ">>", command
-        print type(exception)     # the exception instance
-        print exception.args      # arguments stored in .args
+        print type(exception)  # the exception instance
+        print exception.args  # arguments stored in .args
         exit(-1)
 
 
@@ -68,7 +70,6 @@ def copy_arrays(arr1, arr2):
 # output: the new data with the phoneme classifier feature will
 # be at the data_features_path inside dir called plus_phonemes
 def add_phomene_classifier(phoneme_classifier_path, wav_file, features_file):
-
     # consts
     tmp_file_name = "phonemes/phones.txt"
     phone_dir = "phonemes/"
@@ -76,13 +77,13 @@ def add_phomene_classifier(phoneme_classifier_path, wav_file, features_file):
 
     # validation
     if not os.path.exists(wav_file):
-        print >>sys.stderr, "wav file does not exits"
+        print >> sys.stderr, "wav file does not exits"
         return
     if not os.path.exists(phone_dir):
         os.makedirs(phone_dir)
     current_dir = os.getcwd()
 
-    command = 'python '+current_dir+"/"+phoneme_classifier_path+" "+wav_file+" "+tmp_file_name
+    command = 'python ' + current_dir + "/" + phoneme_classifier_path + " " + wav_file + " " + tmp_file_name
     easy_call(command)
 
     if not os.path.exists(plus_phone_dir):
@@ -92,7 +93,7 @@ def add_phomene_classifier(phoneme_classifier_path, wav_file, features_file):
     file_name = features_file.split('/')
 
     phoneme_file = open(tmp_file_name)
-    out_file = open(plus_phone_dir+file_name[len(file_name)-1], 'wb')
+    out_file = open(plus_phone_dir + file_name[len(file_name) - 1], 'wb')
 
     data_file = data_file.readlines()
     phoneme_file_lines = phoneme_file.readlines()
@@ -107,7 +108,7 @@ def add_phomene_classifier(phoneme_classifier_path, wav_file, features_file):
 
         values = data_file[index].split('\n')
         new_line = values[0].rsplit(' ', 1)[0]
-        new_line = new_line+' '+phoneme_file_lines[index]
+        new_line = new_line + ' ' + phoneme_file_lines[index]
         out_file.write(new_line)
 
     # data_file.close()
@@ -118,7 +119,6 @@ def add_phomene_classifier(phoneme_classifier_path, wav_file, features_file):
 
 # smooth and normalize the voicing, pitch, vowels, nasals and glides
 def smooth_features(data_file):
-
     pitch = 6
     voicing = 7
     vowel = 9
@@ -187,7 +187,6 @@ def smooth_features(data_file):
 
 
 def add_formants(data_path, wav_path, praat_command):
-
     # consts
     tmp_dir = "tmp/"
     if not os.path.exists(tmp_dir):
@@ -198,24 +197,24 @@ def add_formants(data_path, wav_path, praat_command):
     abs_path_dir = os.path.abspath(tmp_dir)
     shutil.copy(wav_path, abs_path_dir)
 
-    command = praat_command+' bin/Extract_F1_F2.praat '+abs_path_dir+" "+abs_path_dir+" .wav"
+    command = praat_command + ' bin/Extract_F1_F2.praat ' + abs_path_dir + " " + abs_path_dir + " .wav"
     os.system(command)
 
     ifile = open(tmp_dir + csv_file_name)
     filename = csv_file_name.split(".")
-    ofile = open(tmp_dir+filename[0]+".txt", "w")
+    ofile = open(tmp_dir + filename[0] + ".txt", "w")
     data = ifile.readlines()
     for line in data:
         line = line.replace("?", "0")
         ofile.write(line)
     ofile.close()
     ifile.close()
-    os.remove(tmp_dir+csv_file_name)
+    os.remove(tmp_dir + csv_file_name)
 
     # Normalize the formants first
     for _file in os.listdir(tmp_dir):
         if _file.endswith(".txt"):
-            data = np.loadtxt(tmp_dir+_file, skiprows=1)
+            data = np.loadtxt(tmp_dir + _file, skiprows=1)
 
             # normalizing the features and save them
             high = 1.0
@@ -233,7 +232,7 @@ def add_formants(data_path, wav_path, praat_command):
             scaled_points = high - (((high - low) * (max_val - data[:, 1])) / rng)
             data[:, 1] = scaled_points
 
-            np.savetxt(tmp_dir+_file, data)
+            np.savetxt(tmp_dir + _file, data)
 
     data_fid = open(data_path)
     file_name = wav_path.split('.')
@@ -241,7 +240,7 @@ def add_formants(data_path, wav_path, praat_command):
     formants_file = file_name[0].split('/')
     formants_fid = open(tmp_dir + formants_file[len(formants_file) - 1] + '.txt')
     features_filename = data_fid.name.split('/')
-    out_file = open(tmp_dir+features_filename[len(features_filename) - 1], 'wb')
+    out_file = open(tmp_dir + features_filename[len(features_filename) - 1], 'wb')
 
     data_file = data_fid.readlines()
     formants_file_lines = formants_fid.readlines()
@@ -262,7 +261,7 @@ def add_formants(data_path, wav_path, praat_command):
             break
 
         filtered_formants_line = formants_file_lines[counter_formants].replace("\t", " ")
-        newLine = newLine+' '+filtered_formants_line
+        newLine = newLine + ' ' + filtered_formants_line
         counter_data += 1
         general_count += 1
         out_file.write(newLine)
@@ -272,7 +271,7 @@ def add_formants(data_path, wav_path, praat_command):
     out_file.close()
 
     # remove leftovers and update the features file
-    shutil.copy(tmp_dir+features_filename[len(features_filename) - 1], data_fid.name)
+    shutil.copy(tmp_dir + features_filename[len(features_filename) - 1], data_fid.name)
     shutil.rmtree(tmp_dir)
 
 
@@ -290,7 +289,7 @@ def main(wav_file, output_data):
 
     # validation
     if not os.path.exists(wav_file):
-        print >>sys.stderr, "wav file does not exits"
+        print >> sys.stderr, "wav file does not exits"
         return
     if not os.path.exists(tmp_dir):
         os.mkdir(tmp_dir)
@@ -300,13 +299,15 @@ def main(wav_file, output_data):
 
     # =================== ACOUSTIC FEATURES =================== #
     # creating the files
-    input_file = open(tmp_dir+tmp_features, 'wb')                   # open the input file for the feature extraction
-    features_file = open(tmp_dir+tmp_input, 'wb')          # open file for the feature list path
-    labels_file = open(tmp_dir+tmp_label, 'wb')            # open file for the labels
+    input_file = open(tmp_dir + tmp_features, 'wb')  # open the input file for the feature extraction
+    features_file = open(tmp_dir + tmp_input, 'wb')  # open file for the feature list path
+    labels_file = open(tmp_dir + tmp_label, 'wb')  # open file for the labels
     length = get_wav_file_length(tmp_file)
 
     # write the data
-    input_file.write('"'+tmp_file+'" '+str('%.8f' % 0)+' '+str(float(length)-zero)+' '+str('%.8f' % 0)+' '+str('%.8f' % 0))
+    input_file.write(
+        '"' + tmp_file + '" ' + str('%.8f' % 0) + ' ' + str(float(length) - zero) + ' ' + str('%.8f' % 0) + ' ' + str(
+            '%.8f' % 0))
     features_file.write(output_data)
 
     input_file.close()
@@ -327,7 +328,7 @@ def main(wav_file, output_data):
     # remove leftovers
     os.remove(output_data)
     file_name = output_data.split('/')
-    shutil.copy("bin/phoneme_classifier/plus_phonemes/"+file_name[len(file_name) - 1], output_data)
+    shutil.copy("bin/phoneme_classifier/plus_phonemes/" + file_name[len(file_name) - 1], output_data)
     shutil.rmtree("bin/phoneme_classifier/plus_phonemes/")
     # ======================================================== #
 
@@ -343,6 +344,7 @@ def main(wav_file, output_data):
     shutil.rmtree(tmp_dir)
     if os.path.exists(tmp_file):
         os.remove(tmp_file)
+
 
 if __name__ == "__main__":
     # the first argument is the wav file

@@ -22,8 +22,8 @@ public class test {
         try{
             // ============================ VOWEL DURATION DATA ============================ //
             Logger.info("Loading vowel duration data.");
-            String testPath = "/Users/yossiadi/Projects/vowel_duration/db/DB_Cynthia/allData/files.txt";
-            String model_path = "models/jordana_no_classifier_dl_5_epochs_avg.weights";
+            String testPath = "res/files.txt";
+            String model_path = "models/cynthia_classifier_dl_5_epochs.weights";
 
             int readerType = 2;
             int numExamples2Display = 1;
@@ -45,11 +45,12 @@ public class test {
             W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
             arguments = new ArrayList<Double>() {{add(0.1); add(-1.36);}}; // model parameters for DL: eta and lambda
             vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(),
-                    new InferenceVowelDuration(), null, new FeatureFunctionsVDnoClassifier(), arguments); // create the model
+                    new InferenceVowelDuration(), null, new FeatureFunctionsVD(), arguments); // create the model
             vowel_model.loadModel(model_path);
             ArrayList<PredictedLabels> labels = vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
 
-            String outputFile = "res/jord_model_cyn_data/res_no_class.txt";
+//            String outputFile = "res/jord_model_cyn_data/res_no_class.txt";
+            String outputFile = "res/res.txt";
             Writer writer = getWriter(0);
             for (int i=0 ; i<labels.size() ; i++){
                 String path = vowelTestInstances.getInstance(i).path;
