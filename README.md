@@ -6,6 +6,7 @@ The repository contains code for vowel duration measurement, feature extraction,
  - back_end folder: contains the training algorithms, it can be used for training the model on new datasets or using different features.
  - front_end folder: contains the features extraction algorithm, it can be used for configuring different parameters for the feature extraction or just for visualization.
  - analysis folder: contains the R scripts that were used to evaluate the results in [Automatic Measurement of Vowel Duration via Structured Prediction](https://todo).
+ - data folder: contains two folders, the first one called wav (contains a wav file and its manual annotation), and the second is pred_text_grid (contains the predicted TextGrid file). This example can be used to test our tool.
  - visualization folder: contains features and features functions visualization tools.
 
 ## Installation
@@ -16,5 +17,8 @@ The code uses the following dependencies:
  - For the visualization tools: Matplotlib
  
 ## Usage
-For measurement just type python predict.py <input_wav_file> <output_text_grid_file>
+For measurement just type python predict.py "input wav file" "output text grid file"
 
+## Example
+You can try our tool using the example file in the data folder and compare it to the manual annotation.
+From the repository directory type: python predict.py data/wav/ex.wav data/pred_text_grid/ex.TextGrid
