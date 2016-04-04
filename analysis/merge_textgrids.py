@@ -32,7 +32,7 @@ def read_lengths(path, fave=0):
             data[f.lower()] = [f, onset, offset]
     return data
 
-
+# ====================== CHANGE THIS PATHS TO THE TEXT-GRID PATH IN YOUR COMPUTER ====================== #
 dcm_path = '/Users/yossiadi/Projects/vowel_duration/docs/VD_Final_results/Jordana_predictions/DL_5_epochs/' \
            'structed_predict_classifier_DL/'
 dcm_nc_path = '/Users/yossiadi/Projects/vowel_duration/docs/VD_Final_results/Jordana_predictions/DL_5_epochs/' \
@@ -49,14 +49,13 @@ fave_annotations = read_lengths(fave_path, 1)
 manual_annotations = read_lengths(manual_path)
 orig_manual_annotations = read_lengths(manual_path_orig)
 
-# # validation
-# for i in manual_annotations:
-#     if i not in orig_manual_annotations:
-#         print(1)
-# for i in orig_manual_annotations:
-#     if i not in manual_annotations:
-#         print(1)
-
+# validation, print mismatch files
+for i in manual_annotations:
+    if i not in orig_manual_annotations:
+        print(i)
+for i in orig_manual_annotations:
+    if i not in manual_annotations:
+        print(i)
 
 output_dir = 'merge_textgrids/'
 if not os.path.exists(output_dir):
