@@ -12,13 +12,19 @@ The repository contains code for vowel duration measurement, feature extraction,
 ## Installation
 Currently the code runs on MacOSX and Linux only.
 The code uses the following dependencies:
- - Java
- - Python (2.7) + Numpy
- - For the visualization tools: Matplotlib
+ - [Java] (https://java.com/en/download/)
+ - [Python (2.7) + Numpy] (https://penandpants.com/2012/02/24/install-python/)
+ - For the visualization tools: [Matplotlib] (https://penandpants.com/2012/02/24/install-python/)
  
 ## Usage
-For measurement just type python predict.py "input wav file" "output text grid file"
+For measurement just type: 
+```bash
+python predict.py "input wav file" "output text grid file"
+```
 
 ## Example
 You can try our tool using the example file in the data folder and compare it to the manual annotation.
-From the repository directory type: python predict.py data/wav/ex.wav data/pred_text_grid/ex.TextGrid
+From the repository directory type: 
+```bash
+python predict.py data/wav/ex.wav data/pred_text_grid/ex.TextGrid
+```
