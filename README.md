@@ -10,7 +10,7 @@ The repository contains code for vowel duration measurement, feature extraction,
  - `visualization folder`: contains features and features functions visualization tools.
 
 ## Installation
-Currently the code runs on MacOSX and Linux only.
+Currently the code runs on MacOSX only.
 The code uses the following dependencies:
  - [Java] (https://java.com/en/download/)
  - [Python (2.7) + Numpy] (https://penandpants.com/2012/02/24/install-python/)
