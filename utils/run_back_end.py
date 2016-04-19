@@ -26,6 +26,7 @@ def main(data_filename, output_labels_file):
     back_end_dir = "back_end/"
     runnable_jar = "run_vowel_predict.sh"
     log_file = "back_end/res/res.txt"
+    res_dir = "back_end/res/"
     tmp_dir = "tmp/"
     tmp_file = "tmp.txt"
 
@@ -35,6 +36,8 @@ def main(data_filename, output_labels_file):
         return
     if not os.path.exists(tmp_dir):
         os.mkdir(tmp_dir)
+    if not os.path.exists(res_dir):
+        os.mkdir(res_dir)
 
     # create the label file
     labels_path = tmp_dir+tmp_file
@@ -61,6 +64,7 @@ def main(data_filename, output_labels_file):
     os.remove(log_file)
     os.remove(file_out)
     shutil.rmtree(tmp_dir)
+    shutil.rmtree(res_dir)
 
 if __name__ == "__main__":
     # the first argument is the data file path
