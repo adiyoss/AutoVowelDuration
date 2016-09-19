@@ -57,8 +57,17 @@ In order to do so:
 This script will display visually the features we just extracted. The numbers 90-150 indicates the vowel boundaries we just extracted using the `extract_labels.py` script. These numbers can be found inside data/features/ex.labels.
 
 ### Step 2: Train the model
-We also provide the ability to train new model using your own data. After extracting the features and labels, we need to summarized all the file paths in a single file. 
-We provide an example for more training and test example as well as file with the paths under: `back_end/data/tutorial/`. The features are under `fea` folder and the labels under `lab` folder. Train.txt and test.txt are the files which contains the paths to the train and test examples.
+We also provide the ability to train new model using your own data. After extracting the features and labels, we need to summarized all the file paths in a single file.
+You can do it using your own script or the one we provided. The script can be found under utils folder and is called `sum_files.py`. 
+
+Usage example (this example was run from the utils folder), this script will generate a training file from all the data in those folders: 
+
+ ```bash
+	python sum_files.py ../back_end/data/tutorial/feat/ ../back_end/data/tutorial/lab/ all.txt
+ ```
+
+
+In the `back_end/data/tutorial/` you can find more training and test example as well as the files with the paths. The features are under `fea` folder and the labels under `lab` folder. Train.txt and test.txt are the files which contains the paths to the train and test examples.
 
 In order to train a model using these features we need to run a small Java code similar to this (The train and test code can be found under: `back_end/src/`):
  - Define the train and test path files:
