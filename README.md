@@ -33,21 +33,27 @@ python predict.py data/wav/ex.wav data/pred_text_grid/ex.TextGrid
 ### Step 1: Feature Extraction
 The first step in training your own model is extracting the features from the raw data. In order to do so, we provide two python scripts to extract the features and the labels.
 The two scripts are placed under `front_end` folder:
-	- The first script is called `extract_features.py`. This script gets as input a .wav file and a target output file and extract the features for the given file. You can run the script using an example file we provided: 
-	```bash
-		python extract_features.py data/orig/ex.wav data/features/ex.data
-	```
-	- The second script is called `extract_labels.py`. This script gets as input a .TextGrid file and a target output file and generates the labels for the given file. You can run the script using an example file we provided:
-	```bash
-		python extract_labels.py data/orig/ex.TextGrid data/features/ex.labels
-	```
+ - The first script is called `extract_features.py`. This script gets as input a .wav file and a target output file and extract the features for the given file. You can run the script using an example file we provided: 
+
+ ```bash
+	python extract_features.py data/orig/ex.wav data/features/ex.data
+```
+
+ - The second script is called `extract_labels.py`. This script gets as input a .TextGrid file and a target output file and generates the labels for the given file. You can run the script using an example file we provided:
+
+```bash
+	python extract_labels.py data/orig/ex.TextGrid data/features/ex.labels
+```
+
 You can visualize the features using the `display_features_and_phi.py` script. 
 In order to do so:
-	- cd into the `visualization/Python/`
-	- type 
-	```bash
-		python display_features_and_phi.py -f ../../front_end/data/features/ex.data -l 90-150 -p 0-0
-	```
+ - cd into the `visualization/Python/`
+ - type 
+
+ ```bash
+	python display_features_and_phi.py -f ../../front_end/data/features/ex.data -l 90-150 -p 0-0
+ ```
+
 This script will display visually the features we just extracted. The numbers 90-150 indicates the vowel boundaries we just extracted using the `extract_labels.py` script. These numbers can be found inside data/features/ex.labels.
 
 ### Step 2: Train the model
