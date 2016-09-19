@@ -6,7 +6,7 @@ import com.structed.data.Logger;
 import com.structed.data.entities.PredictedLabels;
 import com.structed.data.entities.Vector;
 import com.structed.models.StructEDModel;
-import com.structed.models.algorithms.DirectLoss;
+import com.structed.models.algorithms.PassiveAggressive;
 
 import java.util.ArrayList;
 
@@ -22,8 +22,8 @@ public class test {
         try{
             // ============================ VOWEL DURATION DATA ============================ //
             Logger.info("Loading vowel duration data.");
-            String testPath = "res/files.txt";
-            String model_path = "models/cynthia_classifier_dl_5_epochs.weights";
+            String testPath = "data/tutorial/test.txt";
+            String model_path = "models/pa.tutorial.vowel.model";
 
             int readerType = 2;
             int numExamples2Display = 1;
@@ -36,20 +36,19 @@ public class test {
             ArrayList<Double> arguments;
             StructEDModel vowel_model;
             Vector W;
-            ArrayList<Double> task_loss_params = new ArrayList<Double>(){{add(1.0);add(2.0);}}; // task loss parameters
+            ArrayList<Double> task_loss_params = new ArrayList<Double>(){{add(0.0);add(0.0);}}; // task loss parameters
 
             Logger.info("");
             Logger.info("===================================================");
-            Logger.info("============= DIRECT LOSS MINIMIZATION ============");
+            Logger.info("============= PASSIVE AGGRESSIVE ============");
             Logger.info("");
             W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
-            arguments = new ArrayList<Double>() {{add(0.1); add(-1.36);}}; // model parameters for DL: eta and lambda
-            vowel_model = new StructEDModel(W, new DirectLoss(), new TaskLossVowelDuration(),
+            arguments = new ArrayList<Double>() {{add(0.5);}}; // model parameters for PA: eta and lambda
+            vowel_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossVowelDuration(),
                     new InferenceVowelDuration(), null, new FeatureFunctionsVD(), arguments); // create the model
             vowel_model.loadModel(model_path);
             ArrayList<PredictedLabels> labels = vowel_model.predict(vowelTestInstances, task_loss_params, numExamples2Display, true); // predict
 
-//            String outputFile = "res/jord_model_cyn_data/res_no_class.txt";
             String outputFile = "res/res.txt";
             Writer writer = getWriter(0);
             for (int i=0 ; i<labels.size() ; i++){

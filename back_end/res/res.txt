@@ -1,0 +1,10 @@
+data/tutorial/feat/C01B1.data 92-163:508.9725675682673 
+data/tutorial/feat/C06B1.data 94-185:643.8803968366052 
+data/tutorial/feat/C09B1.data 124-183:541.0531383004136 
+data/tutorial/feat/C12B1.data 99-175:692.8659865837047 
+data/tutorial/feat/C18B1.data 185-267:385.93672225630786 
+data/tutorial/feat/E01B1.data 108-177:564.5342547082538 
+data/tutorial/feat/E02B1.data 105-155:537.5044113009068 
+data/tutorial/feat/E10B1.data 109-183:502.50153261122045 
+data/tutorial/feat/E11B1.data 104-161:784.3968215494061 
+data/tutorial/feat/E19B1.data 97-151:599.9766787462862 

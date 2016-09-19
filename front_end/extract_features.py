@@ -5,10 +5,15 @@ import sys
 import os
 import shutil
 import argparse
+import tempfile
 from subprocess import call
 import numpy as np
 
 __author__ = 'yossiadi'
+
+
+def generate_tmp_filename(extension="txt"):
+    return tempfile._get_default_tempdir() + "/" + next(tempfile._get_candidate_names()) + "." + extension
 
 
 # run system commands
@@ -277,31 +282,29 @@ def add_formants(data_path, wav_path, praat_command):
 
 def main(wav_file, output_data):
     # defines
-    tmp_dir = "tmp/"
-    tmp_input = "tmp.input"
-    tmp_label = "tmp.labels"
-    tmp_features = "tmp.features"
-    tmp_file = "tmp.wav"
+    # tmp_dir = "tmp/"
+    tmp_input = generate_tmp_filename("input")
+    tmp_label = generate_tmp_filename("labels")
+    tmp_features = generate_tmp_filename("features")
+    tmp_file = generate_tmp_filename("wav")
     zero = 0.01
 
-    praat_app = "/Applications/Praat.app/Contents/MacOS/Praat"
+    # praat_app = "/Applications/Praat.app/Contents/MacOS/Praat"
     output_data = os.path.abspath(output_data)
 
     # validation
     if not os.path.exists(wav_file):
         print >> sys.stderr, "wav file does not exits"
         return
-    if not os.path.exists(tmp_dir):
-        os.mkdir(tmp_dir)
 
     cmd = "sbin/sox %s -r 16000 -b 16 %s" % (wav_file, tmp_file)
     easy_call(cmd)
 
     # =================== ACOUSTIC FEATURES =================== #
     # creating the files
-    input_file = open(tmp_dir + tmp_features, 'wb')  # open the input file for the feature extraction
-    features_file = open(tmp_dir + tmp_input, 'wb')  # open file for the feature list path
-    labels_file = open(tmp_dir + tmp_label, 'wb')  # open file for the labels
+    input_file = open(tmp_features, 'wb')  # open the input file for the feature extraction
+    features_file = open(tmp_input, 'wb')  # open file for the feature list path
+    labels_file = open(tmp_label, 'wb')  # open file for the labels
     length = get_wav_file_length(tmp_file)
 
     # write the data
@@ -341,7 +344,12 @@ def main(wav_file, output_data):
     # # ======================================================== #
 
     # remove left overs
-    shutil.rmtree(tmp_dir)
+    if os.path.exists(tmp_input):
+        os.remove(tmp_input)
+    if os.path.exists(tmp_label):
+        os.remove(tmp_label)
+    if os.path.exists(tmp_features):
+        os.remove(tmp_features)
     if os.path.exists(tmp_file):
         os.remove(tmp_file)
 
@@ -353,7 +361,7 @@ if __name__ == "__main__":
     # command line arguments
     parser = argparse.ArgumentParser()
     parser.add_argument("wav_filename", help="The wav file")
-    parser.add_argument("output_data", help="The output data file(features)")
+    parser.add_argument("output_data", help="The output data file (features)")
     args = parser.parse_args()
 
     # main function

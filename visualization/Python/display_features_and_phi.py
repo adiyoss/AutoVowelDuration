@@ -6,7 +6,7 @@ from optparse import OptionParser
 import numpy as np
 import matplotlib.pyplot as plt
 
-NUM_OF_FEATURES = 22
+NUM_OF_FEATURES = 20
 graphIndex = 0
 predict_line = 1
 label_line = 1
@@ -90,7 +90,7 @@ def display_features(filename, frame_begin_and_end_real, frame_begin_and_end_pre
                      'Auto Correlation', 'Pitch',
                      'Voicing', 'Zero Crossing', 'Vowel', 'Nasal', 'Glide', 'Sil', 'Sum Vowels', 'Sum Nasals',
                      'Sum Glides',
-                     'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4', 'F1', 'F2']
+                     'MFCC_1', 'MFCC_2', 'MFCC_3', 'MFCC_4']
     while True:
         index = graphIndex % len(feature_names)
         fig = plt.figure(1, figsize=(20, 10))

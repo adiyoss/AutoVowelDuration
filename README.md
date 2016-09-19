@@ -28,3 +28,85 @@ From the repository directory type:
 ```bash
 python predict.py data/wav/ex.wav data/pred_text_grid/ex.TextGrid
 ```
+
+## Tutorial - How to train your own model
+### Step 1: Feature Extraction
+The first step in training your own model is extracting the features from the raw data. In order to do so, we provide two python scripts to extract the features and the labels.
+The two scripts are placed under `front_end` folder:
+	- The first script is called `extract_features.py`. This script gets as input a .wav file and a target output file and extract the features for the given file. You can run the script using an example file we provided: 
+	```bash
+		python extract_features.py data/orig/ex.wav data/features/ex.data
+	```
+
+	- The second script is called `extract_labels.py`. This script gets as input a .TextGrid file and a target output file and generates the labels for the given file. You can run the script using an example file we provided:
+	```bash
+		python extract_labels.py data/orig/ex.TextGrid data/features/ex.labels
+	```
+
+You can visualize the features using the `display_features_and_phi.py` script. 
+In order to do so:
+	- cd into the `visualization/Python/`
+	- type 
+	```bash
+		python display_features_and_phi.py -f ../../front_end/data/features/ex.data -l 90-150 -p 0-0
+	```
+This script will display visually the features we just extracted. The numbers 90-150 indicates the vowel boundaries we just extracted using the `extract_labels.py` script. These numbers can be found inside data/features/ex.labels.
+
+### Step 2: Train the model
+We also provide the ability to train new model using your own data. After extracting the features and labels, we need to summarized all the file paths in a single file. 
+We provide an example for more training and test example as well as file with the paths under: `back_end/data/tutorial/`. The features are under `fea` folder and the labels under `lab` folder. Train.txt and test.txt are the files which contains the paths to the train and test examples.
+
+In order to train a model using these features we need to run a small Java code similar to this (The train and test code can be found under: `back_end/src/`):
+ - Define the train and test path files:
+```java
+    Logger.info("Loading vowel duration data.");
+    String trainPath = "data/tutorial/train.txt";
+    String testPath = "data/tutorial/test.txt";
+```
+ -  Define model parameters and read the data:
+```java
+    int epochNum = 1;
+    int readerType = 2;
+    int isAvg = 1;
+    int numExamples2Display = 1;
+    Reader reader = getReader(readerType);
+
+    // load the data
+    InstancesContainer vowelTrainInstances = reader.readData(trainPath, Consts.SPACE, Consts.COLON_SPLITTER);
+    InstancesContainer vowelTestInstances = reader.readData(testPath, Consts.SPACE, Consts.COLON_SPLITTER);
+    if (vowelTrainInstances.getSize() == 0) return;
+
+    ArrayList<Double> arguments;
+    StructEDModel vowel_model;
+    Vector W;
+    ArrayList<Double> task_loss_params = new ArrayList<Double>(){{add(1.0);add(2.0);}}; // task loss parameters
+
+    // create models dir if doesn't exists
+    File f = new File("models");
+    if(!f.exists())
+        f.mkdir();
+```
+ -  Train and save the model
+```java
+    Logger.info("");
+    Logger.info("=============================================");
+    Logger.info("============= PASSIVE AGGRESSIVE ============");
+    Logger.info("");
+
+    // ======= PA ====== //
+    W = new Vector() {{put(0, 0.0);}}; // init the first weight vector
+    arguments = new ArrayList<Double>() {{
+        add(0.5);}}; // model parameters for PA: only C
+    vowel_model = new StructEDModel(W, new PassiveAggressive(), new TaskLossVowelDuration(),
+            new InferenceVowelDuration(), null, new FeatureFunctionsVD(), arguments); // create the model
+    vowel_model.train(vowelTrainInstances, task_loss_params, null, epochNum, isAvg, true); // train
+
+    // save the model
+    vowel_model.saveModel("models/pa.tutorial.vowel.model");
+```
+Testing can be done using the same code but, with the difference of first load the saved model and remove the instruction of train the model.
+
+```java
+vowel_model.loadModel("models/pa.tutorial.vowel.model");
+```
+
