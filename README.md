@@ -114,3 +114,7 @@ Testing can be done using the same code but, with the difference of first load t
 vowel_model.loadModel("models/pa.tutorial.vowel.model");
 ```
 
+After training the model on the few training examples we provided (20 examples) for one epoch, the error rate should be 9.0 or 9.2 when both task loss values set to zero.
+
+For any questions regarding using the package please contact: yossiadidrum@gmail.com.
+
