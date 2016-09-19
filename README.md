@@ -37,12 +37,10 @@ The two scripts are placed under `front_end` folder:
 	```bash
 		python extract_features.py data/orig/ex.wav data/features/ex.data
 	```
-
 	- The second script is called `extract_labels.py`. This script gets as input a .TextGrid file and a target output file and generates the labels for the given file. You can run the script using an example file we provided:
 	```bash
 		python extract_labels.py data/orig/ex.TextGrid data/features/ex.labels
 	```
-
 You can visualize the features using the `display_features_and_phi.py` script. 
 In order to do so:
 	- cd into the `visualization/Python/`
