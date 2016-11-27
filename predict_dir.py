@@ -5,11 +5,19 @@ from predict import main
 
 
 def run_dir(in_path, out_path):
+    f = open('error.txt', 'w')
+    cwd = os.getcwd()
     for item in os.listdir(in_path):
+        os.chdir(cwd)
+        e = True
         if item.endswith('.wav'):
             out_file_path = out_path + item.replace('.wav', '.TextGrid')
-            main(in_path + item, out_file_path)
-
+            if not os.path.exists(out_file_path):
+                e = main(in_path + item, out_file_path)
+        if not e:
+            f.write(item+'\n')
+            print('ERROR with file: ' + item)
+    f.close()
 
 if __name__ == "__main__":
     # the first argument is the wav file path
