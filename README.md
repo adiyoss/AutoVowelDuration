@@ -1,5 +1,20 @@
 # Automatic Measurement of Vowel Duration via Structured Prediction.
-A key barrier to making phonetic studies scalable and replicable is the need to rely on subjective, manual annotation. To help meet this challenge, a machine learning algorithm is developed for automatic measurement of a widely used phonetic measure: vowel duration. Manually-annotated data is used to train a model that takes as input an arbitrary length segment of the acoustic signal containing a single vowel that is preceded and followed by consonants and outputs the duration of the vowel. The model is based on the structured prediction framework. The input signal and a hypothesized set of a vowel’s onset and offset are mapped to an abstract vector space by a set of acoustic feature functions. The learning algorithm is trained in this space to minimize the difference in expectations between predicted and manually-measured vowel durations. The trained model can then automatically estimate vowel durations without phonetic or orthographic transcription. Results comparing the model to three sets of manually annotated data suggest it out-performs the current gold standard for duration measurement, an HMM-based forced aligner (which requires phonetic transcription as an input) [[paper].](http://asa.scitation.org/doi/abs/10.1121/1.4972527)
+A key barrier to making phonetic studies scalable and replicable is the need to rely on subjective, manual annotation. To help meet this challenge, a machine learning algorithm is developed for automatic measurement of a widely used phonetic measure: vowel duration. Manually-annotated data is used to train a model that takes as input an arbitrary length segment of the acoustic signal containing a single vowel that is preceded and followed by consonants and outputs the duration of the vowel. The model is based on the structured prediction framework. The input signal and a hypothesized set of a vowel’s onset and offset are mapped to an abstract vector space by a set of acoustic feature functions. The learning algorithm is trained in this space to minimize the difference in expectations between predicted and manually-measured vowel durations. The trained model can then automatically estimate vowel durations without phonetic or orthographic transcription. Results comparing the model to three sets of manually annotated data suggest it out-performs the current gold standard for duration measurement, an HMM-based forced aligner (which requires phonetic transcription as an input)
+
+If you find our work useful please cite: 
+[Automatic Measurement of Vowel Duration via Structured Prediction] (http://asa.scitation.org/doi/abs/10.1121/1.4972527)
+```
+@article{adi2016automatic,
+  title={Automatic measurement of vowel duration via structured prediction},
+  author={Adi, Yossi and Keshet, Joseph and Cibelli, Emily and Gustafson, Erin and Clopper, Cynthia and Goldrick, Matthew},
+  journal={The Journal of the Acoustical Society of America},
+  volume={140},
+  number={6},
+  pages={4517--4527},
+  year={2016},
+  publisher={ASA}
+}
+```
 
 ## Content
 The repository contains code for vowel duration measurement, feature extraction, visualization tools and results analysis
